@@ -15,6 +15,15 @@ class CreateNakitsTable extends Migration
     {
         Schema::create('nakits', function (Blueprint $table) {
             $table->id();
+            $table->string('naziv');
+            $table->string('opis');
+            $table->string('boja_zlata');
+            $table->string('proizvedeno_u');
+
+
+            //cena
+          //  $table->double('cena');
+          $table->foreignId('kategorija_id');
             $table->timestamps();
         });
     }

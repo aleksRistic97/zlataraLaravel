@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePorudzbenicasTable extends Migration
+class CreateRacunsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,9 @@ class CreatePorudzbenicasTable extends Migration
      */
     public function up()
     {
-        Schema::create('porudzbenicas', function (Blueprint $table) {
+        Schema::create('racuns', function (Blueprint $table) {
             $table->id();
-            $table->string('adresa');
-            $table->date('vreme');
-
-
-            $table->foreignId('nakid_id');
-            $table->foreignId('user_id');
-
-
+            
             $table->timestamps();
         });
     }
@@ -34,6 +27,6 @@ class CreatePorudzbenicasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('porudzbenicas');
+        Schema::dropIfExists('racuns');
     }
 }
