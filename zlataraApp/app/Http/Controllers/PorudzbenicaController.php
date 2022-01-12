@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PorudzbenicaResource;
 use App\Models\Porudzbenica;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class PorudzbenicaController extends Controller
      */
     public function index()
     {
-        //
+        $porudzbine=Porudzbenica::all();
+       return PorudzbenicaResource::collection($porudzbine);
     }
 
     /**
@@ -44,9 +46,9 @@ class PorudzbenicaController extends Controller
      * @param  \App\Models\Porudzbenica  $porudzbenica
      * @return \Illuminate\Http\Response
      */
-    public function show(Porudzbenica $porudzbenica)
+    public function show($id)
     {
-        //
+        return new PorudzbenicaResource(  Porudzbenica::find($id)) ;
     }
 
     /**
