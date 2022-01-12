@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PorudzbenicaResource;
 use App\Models\Porudzbenica;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PorudzbenicaController extends Controller
 {
@@ -37,7 +38,30 @@ class PorudzbenicaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        
+        $validator = Validator::make($request->all(), [
+            'adresaDostave' => 'required|string|max:50',
+            'vreme' => 'required',
+            'nakit_id' => 'required', 
+            'user_id' => 'required'
+             
+        ]);
+
+        if ($validator->fails()) 
+            return response()->json($validator->errors());
+        $p = Porudzbenica::create([
+            'adresaDostave' => $request->adresaDostave, 
+            'vreme' => $request->vreme, 
+            'nakit_id' => $request->nakit_id,
+            'user_id' => $request->user_id
+        ]);
+        $p->save();
+        return response()->json(['Porudzbenica kreirana!', new PorudzbenicaResource($p)]);
+
+
+
+
     }
 
     /**
@@ -69,9 +93,32 @@ class PorudzbenicaController extends Controller
      * @param  \App\Models\Porudzbenica  $porudzbenica
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Porudzbenica $porudzbenica)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'adresaDostave' => 'required|string|max:50',
+            'vreme' => 'required',
+            'nakit_id' => 'required', 
+            'user_id' => 'required'
+             
+        ]);
+
+        if ($validator->fails()) 
+            return response()->json($validator->errors());
+        $p = Porudzbenica::find($id);
+        if($p){
+            $p->adresaDostave = $request->adresaDostave;
+            $p->vreme = $request->vreme;
+            $p->nakit_id = $request->nakit_id;
+            $p->user_id = $request->user_id;
+
+            $p->save();
+            return response()->json(['Porudzbenica azurirana!', new PorudzbenicaResource($p)]);
+        }else{
+            return response()->json('neuspesno azuriranje!');
+        }
+       
+
     }
 
     /**
@@ -80,8 +127,16 @@ class PorudzbenicaController extends Controller
      * @param  \App\Models\Porudzbenica  $porudzbenica
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Porudzbenica $porudzbenica)
+    public function destroy($id)
     {
-        //
+        $p = Porudzbenica::find($id);
+
+        if($p){
+            $p->delete();
+            return response()->json(['Uspesno obrisano',new PorudzbenicaResource($p)]);
+        }else{
+            return response()->json('Trazeni objekat ne postoji u bazi');
+        }
+
     }
 }

@@ -9,6 +9,17 @@ class Porudzbenica extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'adresaDostave', 
+        'vreme',
+        'user_id',
+        'nakit_id'
+
+
+
+    ];
+
+
     public function nakit( )
     {
         return  $this->hasMany(Nakit::class);

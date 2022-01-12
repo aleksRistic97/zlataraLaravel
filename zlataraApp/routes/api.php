@@ -16,9 +16,24 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['middleware' => ['auth:sanctum']], function () {//ako je korisnik ulogovan moze da vrsi operacije dodavanja, azuriranja i brisanja
+    Route::get('/profiles', function (Request $request) { //ovo nam omogucava da prikazemo ulogovanog korisnika
+        return auth()->user();
+    });
+ 
+    //Route::resource('porudzbenice', PorudzbenicaController::class)->only(['update', 'store', 'destroy']);
+    Route::put('porudzbenice/{id}', [PorudzbenicaController::class, 'update']);
+   
+    Route::delete('porudzbenice/{id}', [PorudzbenicaController::class, 'destroy']);
+    Route::post('porudzbenice', [PorudzbenicaController::class, 'store']);
+   
+   
+
+    Route::post('/logout', [AuthController::class, 'logout']); //ako je korisnik ulogovan moze da se odjavi
 });
 
 
@@ -29,5 +44,4 @@ Route::get('users/{id}', [UserController::class, 'show']);
 Route::get('porudzbenice', [PorudzbenicaController::class, 'index']);
 Route::get('porudzbenice/{id}', [PorudzbenicaController::class, 'show']);
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+
