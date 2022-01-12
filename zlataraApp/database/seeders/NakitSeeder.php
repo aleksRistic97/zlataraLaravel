@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use App\Models\Nakit;
 class NakitSeeder extends Seeder
 {
     /**
@@ -13,6 +13,6 @@ class NakitSeeder extends Seeder
      */
     public function run()
     {
-        //
+       Nakit::factory(10)->create();
     }
 }

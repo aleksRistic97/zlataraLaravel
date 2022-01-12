@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Nakit;
+use App\Models\Porudzbenica;
 use Illuminate\Database\Seeder;
-
+ 
 class PorudzbenicaSeeder extends Seeder
 {
     /**
@@ -13,6 +15,6 @@ class PorudzbenicaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Porudzbenica::factory(5)->create();
     }
 }
