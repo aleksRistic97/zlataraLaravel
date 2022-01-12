@@ -19,7 +19,7 @@ class CreatePorudzbenicasTable extends Migration
             $table->date('vreme');
 
 
-            $table->foreignId('nakid_id');
+            $table->foreignId('nakit_id');
             $table->foreignId('user_id');
 
 
